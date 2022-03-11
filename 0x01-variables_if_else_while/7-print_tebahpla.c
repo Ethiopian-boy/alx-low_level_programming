@@ -9,10 +9,10 @@ int main(void)
 {
 int l = 'z';
 while(l >= 'a')
-   {
-	   putchar(l);
-	   l--;
-   }
+{
+putchar(l);
+l -= 1;
+}
 putchar('\n');
 return (0);
 }
