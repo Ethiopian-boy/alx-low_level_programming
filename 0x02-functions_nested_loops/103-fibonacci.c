@@ -16,7 +16,7 @@ int main(void)
 		j = tmp;
 		if (tmp % 2 == 0 && tmp < 4000000)
 		{
-			sum += k;
+			sum += tmp;
 		}
 	}
 	printf("%lu\n", sum);
