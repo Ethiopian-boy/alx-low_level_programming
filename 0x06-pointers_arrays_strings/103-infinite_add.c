@@ -1,37 +1,42 @@
-#include "main.h"
-#include <stdio.h>
+#include "main,h"
+
 /**
  * infinite_add - Adds two numbers
- * @n1: first input string
- * @n2: second input string
- * @r: pointer to buffer where result is stored
- * @size_r: requested size for the buffer
- * Return: pointer to buffer where result is stored
+ * @n1: Pointer to the first character of number 1
+ * @n2: Pointer to the first character of number 2
+ * @r: Buffer where to write the result
+ * @n: Buffer size
+ *
+ * Return: Pointer to the result of the string
  */
-
-char *infinite_add(char *n1, char *n2, char *r, int size_r)
+char *infinite_add(char *n1, char *n2, char *r, int n)
 {
-	int i, j, c;
+	int len1 = 0, len2 = 0;
+	int add = 0;
+	int i = n - 2;
 
-	i = j = c = 0;
-	if ((n1[0] - '0') + (n2[0] - '0') >= 10)
+	while (n1[len1 + 1] != 0)
+		len1++;
+	while (n2[len2 + 1] != 0)
+		len2++;
+	r[n - 1] = 0;
+
+	while (i >= 0 && (len1 >= 0 || len2 >= 0))
 	{
-		r[0] = 1 + '0';
-		j = 1;
+		add += (len1 < 0 ? '0' : n1[len1]) + (len2 < 0 ? '0' : n2[len2]);
+		add -= 2 * '0';
+		r[i] = add % 10 + '0';
+		add /= 10;
+		i--;
+		len1--;
+		len2--;
 	}
-	while (i < size_r && (n1[i] != '\0' || n2[i] != '\0' || r[j] != '\0'))
-	{
-		if ((n1[i + 1] - '0') + (n2[i + 1] - '0') >= 10)
-			c = 1;
-		else
-			c = 0;
-		r[j] = (n1[i] - '0') + (n2[i] - '0') + c;
-		r[j] = r[j] % 10 + '0';
-		i++;
-		j++;
-		if (n1[i] == '\0' || n2[i] == '\0')
-			r[j] = '\0';
-	}
-	r[j] = '\0';
-	return (r);
+
+	if ((i < len1 || i < len2) || (i < 0 && add))
+		return (0);
+
+	add ? r[i] = add + '0' : 1;
+	i += add ? 0 : 1;
+
+	return (r + i);
 }
