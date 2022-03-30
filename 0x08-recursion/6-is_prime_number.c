@@ -1,5 +1,7 @@
 #include "main.h"
 
+int getNumPrime(int num, int i);
+
 /**
  * is_prime_number - returns 1 if the input integer is a prime number
  * otherwise return 0
@@ -16,7 +18,6 @@ int is_prime_number(int n)
 
 /**
  * getNumPrime - function that gets if num is 0 or 1
- *
  * @num: input number
  * @i: Counter variable
  * Return: int
