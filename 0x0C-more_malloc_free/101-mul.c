@@ -1,98 +1,68 @@
-#include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 /**
-* _isNum - check if is a number
-*@num: string to check
-*Return: 1 is numm, 0 not num
-*/
-int _isNum(char *num)
+  * _isdigit - tells if the string consists of digits
+  * @argv: pointer to current item in argument
+  * Return: return 0 if all digits, 1 if not all digits.
+  */
+int _isdigit(char *argv)
 {
 	int i;
 
-	for (i = 0; num[i] != '\0'; i++)
+	i = 0;
+	while (argv[i])
 	{
-		if (num[i] < '0' || num[i] > '9')
-			return (0);
+		if (argv[i] >= '0' && argv[i] <= '9')
+			i++;
+		else
+			return (1);
 	}
-	return (1);
+	return (0);
 }
-
 /**
-* *_memset - copies a character to the firstn characters of the string pointed
-*@s: original string
-*@b: value to remplace
-*@n: number of bytes
-*Return: s (string modify)
-*/
-char *_memset(char *s, char b, unsigned int n)
+  * _atoi - converts a string of ascii digits to the values they represent
+  * @s: pointer to the source string
+  * Return: value of digits
+  */
+int _atoi(char *s)
 {
-	unsigned int i;
+	int i, result;
 
-	for (i = 0; i < n; i++)
-		s[i] = b;
-	return (s);
+	i = result = 0;
+	while (s[i])
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			result *= 10;
+			result += (s[i] - '0');
+		}
+		i++;
+	}
+	return (result);
 }
-
 /**
-* _strlen - returns the lenght of a string
-*@s: poiter of character
-*Return: the length of a string
-*/
-int _strlen(char *s)
-{
-	int len;
-
-	len = 0;
-	while (*(s + len) != '\0')
-		len++;
-	return (len);
-}
-
-/**
-* main - multiple 2 positive numbers
-*@argc: argument counter
-*@argv: number to multiply
-*Return: 0 (success)
-*/
+  * main - main function call
+  * @argc: argument count
+  * @argv: 2D array of arguments
+  * Return: return 0 on success, 98 on failure
+  */
 int main(int argc, char *argv[])
 {
-	int length, c, prod, i, j, l1, l2;
-	int *res;
+	int i;
 
-	if ((argc != 3 || !(_isNum(argv[1]))) || !(_isNum(argv[2])))
-		puts("Error"), exit(98);
-	l1 = _strlen(argv[1]), l2 = _strlen(argv[2]);
-	length = l1 + l2;
-	res = calloc(length, sizeof(int *));
-	if (res == NULL)
-		puts("Error"), exit(98);
-	for (i = l2 - 1; i > -1; i--)
+	malloc();
+	if (argc != 3)
 	{
-		c = 0;
-		for (j = l1; j > -1; j--)
+		printf("Error\n");
+		exit(98);
+	}
+	for (i = 1; i < argc; i++)
+	{
+		if (_isdigit(argv[i]))
 		{
-			prod = (argv[2][i] - '0') * (argv[1][j] - '0');
-			c = (prod / 10);
-			res[(i + j) + 1] += (prod % 10);
-			if (res[(i + j) + 1] > 9)
-			{
-				res[i + j] += res[(i + j) + 1] / 10;
-				res[(i + j) + 1] = res[(i + j) + 1] % 10;
-			}
-			res[(i + j) + 1] += c;
+			printf("Error\n");
+			exit(98);
 		}
 	}
-
-	if (res[0] == 0)
-		i = 1;
-	else
-		i = 0;
-	for (; i < length; i++)
-		printf("%d", res[i]);
-
-	printf("\n");
-	free(res);
 	return (0);
 }
