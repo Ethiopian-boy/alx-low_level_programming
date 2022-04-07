@@ -1,70 +1,56 @@
+#include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "main.h"
-
 /**
-  * _isdigit - tells if the string consists of digits
-  * @argv: pointer to current item in argument
-  * Return: return 0 if all digits, 1 if not all digits.
-  */
-int _isdigit(char *argv)
-{
-	int i;
-
-	i = 0;
-	while (argv[i])
-	{
-		if (argv[i] >= '0' && argv[i] <= '9')
-			i++;
-		else
-			return (1);
-	}
-	return (0);
-}
-/**
-  * _atoi - converts a string of ascii digits to the values they represent
-  * @s: pointer to the source string
-  * Return: value of digits
-  */
+ * _atoi - Converts a character array to an integer
+ * @s: character array to convert
+ * Return: returns integer from array, returns 0 if none found
+ */
 int _atoi(char *s)
 {
-	int i, result;
-
-	i = result = 0;
-	while (s[i])
-	{
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			result *= 10;
-			result += (s[i] - '0');
-		}
-		i++;
-	}
-	return (result);
+int retval, i, neg;
+i = 0;
+retval = 0;
+neg = -1;
+while (s[i] != '\0' && (s[i] < '0' || s[i] > '9'))
+{
+if (s[i] == '-')
+neg *= -1;
+i++;
+}
+while (s[i] != '\0' && (s[i] >= '0' && s[i] <= '9'))
+retval = (retval * 10) - (s[i++] - '0');
+return (retval *neg);
 }
 /**
-  * main - main function call
-  * @argc: argument count
-  * @argv: 2D array of arguments
-  * Return: return 0 on success, 98 on failure
-  */
+ * main - multiplies two positive numbers
+ * @argc: n arguments
+ * @argv: args
+ * Return: int
+ */
 int main(int argc, char *argv[])
 {
-	int i;
-
-	malloc();
-	if (argc != 3)
-	{
-		printf("Error\n");
-		exit(98);
-	}
-	for (i = 1; i < argc; i++)
-	{
-		if (_isdigit(argv[i]))
-		{
-			printf("Error\n");
-			exit(98);
-		}
-	}
-	return (0);
+int a, b, i, j;
+unsigned long mul;
+if (argc != 3)
+{
+printf("Error\n");
+exit(98);
+}
+for (i = 1; i < argc; i++)
+{
+for (j = 0; argv[i][j] != '\0'; j++)
+{
+if (argv[i][j] > 57 || argv[i][j] < 48)
+{
+printf("Error\n");
+exit(98);
+}
+}
+}
+a = _atoi(argv[1]);
+b = _atoi(argv[2]);
+mul = a *b;
+printf("%lu\n", mul);
+return (0);
 }
