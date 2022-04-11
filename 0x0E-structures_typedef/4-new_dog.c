@@ -1,38 +1,63 @@
-#include "dog.h"
 #include <stdlib.h>
+#include "dog.h"
+
 /**
-  * new_dog - creates a new struct of type dog
-  * @name: struct parameter name
-  * @age: struct parameter age
-  * @owner: struct parameter owner
-  * Return: returns pointer to buffer of datatype dog
-  */
+ * _strdup - returns a pointer to a newly allocated space in memory
+ * which contains a copy of the string given as a parameter.
+ * @str: input char
+ * Return: char
+ */
+
+char *_strdup(char *str)
+{
+	char *dup;
+	unsigned int i = 0;
+	unsigned int j = 0;
+
+	if (str == NULL)
+		return (NULL);
+	while (str[i] != '\0')
+		i += 1;
+	i += 1;
+	dup = malloc(i * sizeof(*dup));
+	if (dup == NULL)
+		return (NULL);
+	while (j < i)
+	{
+		dup[j] = str[j];
+		j += 1;
+	}
+	return (dup);
+}
+
+/**
+ *new_dog - function that creates a new dog
+ *@name: name of dog
+ *@age: age of dog
+ *@owner:owner of dog
+ *Return: new struct
+ */
+
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	int nlen, olen, i;
-	dog_t *doggy;
+	struct dog *new_dog;
 
-	nlen = olen = 0;
-	while (name[nlen++])
-		;
-	while (owner[olen++])
-		;
-	doggy = malloc(sizeof(dog_t));
-	if (doggy == NULL)
+	new_dog = malloc(sizeof(struct dog));
+	if (new_dog == NULL)
 		return (NULL);
-
-	doggy->name = malloc(nlen * sizeof(doggy->name));
-	if (doggy == NULL)
+	new_dog->name = _strdup(name);
+	if (new_dog->name == NULL)
+	{
+		free(new_dog);
 		return (NULL);
-	for (i = 0; i < nlen; i++)
-		doggy->name[i] = name[i];
-
-	doggy->age = age;
-
-	doggy->owner = malloc(olen * sizeof(doggy->owner));
-	if (doggy == NULL)
+	}
+	new_dog->age = age;
+	new_dog->owner = _strdup(owner);
+	if (new_dog->owner == NULL)
+	{
+		free(new_dog);
+		free(new_dog->name);
 		return (NULL);
-	for (i = 0; i < olen; i++)
-		doggy->owner[i] = owner[i];
-	return (doggy);
+	}
+	return (new_dog);
 }
