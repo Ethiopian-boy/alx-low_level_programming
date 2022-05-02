@@ -1,6 +1,6 @@
 #include "main.h"
 
-/*
+/**
  * ssize_t read_text file - reads a text file and prints it
  * to the POSIX standard output
  * @filename : filename
